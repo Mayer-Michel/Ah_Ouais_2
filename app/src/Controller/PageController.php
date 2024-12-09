@@ -10,6 +10,6 @@ class PageController
     // Page mentions légales
     public function legalNotice(): void
     {
-        echo 'Les mentions légales !';
+        echo 'Les mentions légales depuis le controller !';
     }
 }
