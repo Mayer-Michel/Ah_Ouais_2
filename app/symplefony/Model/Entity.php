@@ -1,6 +1,6 @@
 <?php
 namespace Symplefony\Model;
-abstract class Model 
+abstract class Entity 
 {
     protected int $id;
     public function getId(): int { return $this->id; }

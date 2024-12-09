@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use App\Model\Repository\RepoManager;
 use App\Model\Repository\UserRepository;
 use Laminas\Diactoros\ServerRequest;
 
@@ -57,8 +58,7 @@ class UserController extends Controller
 
         $user = new User( $user_data );
 
-        $repo = new UserRepository( Database::getPDO() );
-        $user_created = $repo->create( $user );
+        $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
 
         if( is_null( $user_created ) ) {
             // TODO: gérer une erreur
@@ -72,11 +72,10 @@ class UserController extends Controller
     public function index(): void
     {
         $view = new View( 'user:admin:list' );
-
-        $repo = new UserRepository( Database::getPDO() );
+        
         $data = [
             'title' => 'Liste des utilisateurs',
-            'users' => $repo->getAll()
+            'users' => RepoManager::getRM()->getUserRepo()->getAll()
         ];
 
         $view->render( $data );

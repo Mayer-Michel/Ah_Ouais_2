@@ -43,7 +43,7 @@ abstract class Repository
         return $users;
     }
     /* cRud: Read un item par son id */
-    protected function readById( string $class_name, int $id ): ?Model
+    protected function readById( string $class_name, int $id ): ?Entity
     {
         $query = sprintf(
             'SELECT * FROM `%s` WHERE id=:id',
