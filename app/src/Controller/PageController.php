@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use Symplefony\Controller;
 use Symplefony\View;
 
 use App\Model\UserModel;
-class PageController
+class PageController extends Controller
 {
     // Page d'accueil
     public function index(): void
@@ -23,5 +24,7 @@ class PageController
     public function legalNotice(): void
     {
         echo 'Les mentions légales !';
+
+        var_dump( UserModel::getById(4) );
     }
 }

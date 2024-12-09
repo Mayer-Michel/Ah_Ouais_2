@@ -15,6 +15,7 @@ use MiladRahimi\PhpRouter\Routing\Attributes;
 
 use App\Controller\AdminController;
 use App\Controller\AuthController;
+use App\Controller\UserController;
 use App\Controller\PageController;
 use App\Middleware\AdminMiddleware;
 use Symplefony\View;
@@ -25,6 +26,8 @@ final class App
 
     // Le routeur de l'application
     private Router $router;
+
+    public function getRouter(): Router { return $this->router; }
 
     public static function getApp(): self
     {
@@ -52,9 +55,16 @@ final class App
     // Enregistrement des routes de l'application
     private function registerRoutes(): void
     {
+        // -- Formats des paramètres --
+        // {id} doit être un nombre
+        $this->router->pattern( 'id', '\d+' );
+
         // Pages communes
         $this->router->get( '/', [ PageController::class, 'index' ] );
         $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
+
+        // TODO: Groupe Visiteurs (non-connectés)
+        // -- Pages d'admin --
         
         // Pages d'admin
         $adminAttributes = [
@@ -63,6 +73,18 @@ final class App
         ];
         $this->router->group( $adminAttributes, function( Router $router ) {
             $router->get( '', [ AdminController::class, 'dashboard' ]);
+
+            // -- User --
+            // Ajout
+            $router->get( '/users/add', [ UserController::class, 'add' ] );
+            $router->post( '/users', [ UserController::class, 'create' ] );
+
+            // Liste
+            $router->get( '/users', [ UserController::class, 'index' ]);
+            
+            // Détail
+            $router->get( '/users/{id}', [ UserController::class, 'show' ] );
+
         });
     }
 
