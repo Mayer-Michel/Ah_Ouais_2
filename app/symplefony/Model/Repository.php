@@ -3,14 +3,15 @@
 namespace Symplefony\Model;
 
 use PDO;
-use Symplefony\Database;
 
 abstract class Repository
 {
     protected PDO $pdo;
     
-    abstract public static function getTableName(): string;
-    abstract public function getAll(): array;
+    abstract protected function getTableName(): string;
+    abstract public function getALL(): array;
+    abstract public function getById( int $id ): mixed;
+    
     public function __construct( PDO $pdo )
     {
         $this->pdo = $pdo;
@@ -42,11 +43,11 @@ abstract class Repository
         return $users;
     }
     /* cRud: Read un item par son id */
-    protected function readById( string $class_name, int $id ): ?IModel
+    protected function readById( string $class_name, int $id ): ?Model
     {
         $query = sprintf(
             'SELECT * FROM `%s` WHERE id=:id',
-            get_called_class()::getTableName()
+            $this->getTableName()
         );
         $sth = $this->pdo->prepare( $query );
         // Si la préparation échoue
