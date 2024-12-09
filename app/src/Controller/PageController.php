@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symplefony\View;
 
+use App\Model\UserModel;
 class PageController
 {
     // Page d'accueil
@@ -11,7 +12,23 @@ class PageController
     {
         $view = new View( 'page:home' );
 
-        $view->render();
+        $data = [
+            'title' => 'Accueil - AhOuais.com'
+        ];
+
+        $view->render( $data );
+        // Tests du UserModel (à supprimer après)
+        $bdd = [
+            'id' => 5,
+            'password' => 'hello_world_securité',
+            'email' => 'hello_world@hotmail.com',
+            'firstname' => 'Mayer',
+            'lastname' => 'Michl',
+            'phone_number' => '06 45 78 95 78',
+            'role' => 'honor'
+        ];
+        $mayermich = new UserModel($bdd);
+        var_dump( $mayermich );
     }
 
     // Page mentions légales
