@@ -25,7 +25,7 @@ class PageController
             'firstname' => 'Mayer',
             'lastname' => 'Michl',
             'phone_number' => '06 45 78 95 78',
-            'role' => 'honor'
+            'role' => '1'
         ];
         $mayermich = new UserModel($bdd);
         var_dump( $mayermich );

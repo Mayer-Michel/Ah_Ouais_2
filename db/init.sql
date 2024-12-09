@@ -6,13 +6,14 @@ CREATE TABLE `equipments` (
 CREATE TABLE `rooms` (
   `id` int AUTO_INCREMENT,
   `type_id` int,
+  `user_id` int,
   `address_id` int UNIQUE,
   `capacity` int,
   `surface` decimal,
   `price_day` decimal,
   `description` varchar(255),
   `image` varchar(50),
-  PRIMARY KEY (`id`, `type_id`)
+  PRIMARY KEY (`id`, `type_id`, `user_id`)
 );
 
 CREATE TABLE `room_equipment` (
@@ -53,6 +54,8 @@ CREATE TABLE `address` (
 );
 
 ALTER TABLE `rooms` ADD FOREIGN KEY (`type_id`) REFERENCES `types` (`id`);
+
+ALTER TABLE `rooms` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 ALTER TABLE `rooms` ADD FOREIGN KEY (`address_id`) REFERENCES `address` (`id`);
 
