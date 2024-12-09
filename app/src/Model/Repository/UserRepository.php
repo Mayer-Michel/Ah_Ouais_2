@@ -15,11 +15,11 @@ class UserRepository extends Repository
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`password`,`email`,`firstname`,`lastname`,`phone_number`, `role`) 
-                VALUES (:password,:email,:firstname,:lastname,:phone_number,:role)',
+                (`password`,`email`,`firstname`,`lastname`,`phone_number`) 
+                VALUES (:password,:email,:firstname,:lastname,:phone_number)',
             $this->getTableName()
         );
-        
+
         $sth = $this->pdo->prepare( $query );
 
         // Si la préparation échoue
@@ -31,8 +31,8 @@ class UserRepository extends Repository
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhoneNumber(),
-            'role' => $user->getRole()
+            'phone_number' => $user->getPhoneNumber()
+            // 'role' => $user->getRole()
         ]);
         // Si echec de l'insertion
         if( ! $success ) {

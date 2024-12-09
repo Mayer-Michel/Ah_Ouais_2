@@ -17,6 +17,7 @@ use App\Controller\AdminController;
 use App\Controller\AuthController;
 use App\Controller\UserController;
 use App\Controller\PageController;
+use App\Controller\TypeController;
 use App\Middleware\AdminMiddleware;
 use Symplefony\View;
 
@@ -81,9 +82,13 @@ final class App
 
             // Liste
             $router->get( '/users', [ UserController::class, 'index' ]);
-            
+
             // Détail
             $router->get( '/users/{id}', [ UserController::class, 'show' ] );
+
+            // -- Category --
+            // Liste
+            $router->get( '/types', [ TypeController::class, 'index' ]);
 
         });
     }
@@ -97,6 +102,7 @@ final class App
         // Page 404 avec status HTTP adequat pour les pages non listée dans le routeur
         catch( RouteNotFoundException $e ) {
             View::renderError( 404 );
+
         }
         // Erreur 500 avec status HTTP adequat pour tout autre problème temporaire ou non
         catch( Throwable $e ) {

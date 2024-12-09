@@ -46,11 +46,11 @@ class User extends Entity
         return $this;
     }
 
-    protected string $role;
-    public function getRole(): string { return $this->role; }
-    public function setRole( int $value ): self
-    {
-        $this->role = $value;
-        return $this;
-    }
+    // protected string $role;
+    // public function getRole(): string { return $this->role; }
+    // public function setRole( int $value ): self
+    // {
+    //     $this->role = $value;
+    //     return $this;
+    // }
 }

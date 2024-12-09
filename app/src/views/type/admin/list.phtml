@@ -1,0 +1,15 @@
+<h1>Types</h1>
+<?php if( !empty($types) ): ?>
+<ul>
+    <?php foreach( $types as $type ): ?>
+        <li>
+            <ul>
+                <li>Id: <?php echo $type->getId() ?></li>
+                <li>Label: <?php echo $type->getLabel() ?></li>
+            </ul>
+        </li>
+    <?php endforeach ?>
+</ul>
+<?php else: ?>
+    <div>Aucun type définie.</div>
+<?php endif ?>

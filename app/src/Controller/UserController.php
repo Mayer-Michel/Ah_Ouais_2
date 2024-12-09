@@ -23,7 +23,7 @@ class UserController extends Controller
         $view = new View( 'user:create-account' );
 
         $data = [
-            'title' => 'Créer mon compte - Autodingo.com'
+            'title' => 'Créer mon compte - AhOuais.com'
         ];
 
         $view->render( $data );
@@ -72,7 +72,7 @@ class UserController extends Controller
     public function index(): void
     {
         $view = new View( 'user:admin:list' );
-        
+
         $data = [
             'title' => 'Liste des utilisateurs',
             'users' => RepoManager::getRM()->getUserRepo()->getAll()
