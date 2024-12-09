@@ -17,6 +17,7 @@ use App\Controller\AdminController;
 use App\Controller\AuthController;
 use App\Controller\PageController;
 use App\Middleware\AdminMiddleware;
+use Symplefony\View;
 
 final class App
 {
@@ -73,13 +74,11 @@ final class App
         }
         // Page 404 avec status HTTP adequat pour les pages non listée dans le routeur
         catch( RouteNotFoundException $e ) {
-            http_response_code( 404 );
-            echo 'Oups... La page n\'existe pas';
+            View::renderError( 404 );
         }
         // Erreur 500 avec status HTTP adequat pour tout autre problème temporaire ou non
         catch( Throwable $e ) {
-            http_response_code( 500 );
-            echo 'Erreur interne du serveur';
+            View::renderError( 500 );
         }
     } 
 
