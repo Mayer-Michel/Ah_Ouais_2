@@ -1,8 +1,13 @@
 <?php
 namespace App\Model;
+
+use Symplefony\Database;
 use Symplefony\Model\Model;
+
 class UserModel extends Model
 {
+    private const TABLE_NAME = 'users';
+
     protected string $password;
     public function getPassword(): string { return $this->password; }
     public function setPassword( int $value ): self
@@ -47,4 +52,60 @@ class UserModel extends Model
         $this->role = $string;
         return $this;
     }
+
+     /* Crud: Create */
+     public static function create( self $user ): ?self
+     {
+         $query = sprintf(
+             'INSERT INTO `%s` 
+                 (`password`,`email`,`firstname`,`lastname`,`phone_number`, `role`) 
+                 VALUES (:password,:email,:firstname,:lastname,:phone_number,:role)',
+             self::TABLE_NAME
+         );
+         $sth = Database::getPDO()->prepare( $query );
+         // Si la préparation échoue
+         if( ! $sth ) {
+             return null;
+         }
+         $success = $sth->execute([
+             'password' => $user->getPassword(),
+             'email' => $user->getEmail(),
+             'firstname' => $user->getFirstname(),
+             'lastname' => $user->getLastname(),
+             'phone_number' => $user->getPhoneNumber(),
+             'role' => $user->getRole()
+         ]);
+         // Si echec de l'insertion
+         if( ! $success ) {
+             return null;
+         }
+         // Ajout de l'id de l'item créé en base de données
+         $user->setId( Database::getPDO()->lastInsertId() );
+         return $user;
+     }
+     /* cRud: Read un item par son id */
+     public static function getById( int $id ): ?self
+     {
+         $query = sprintf(
+             'SELECT * FROM `%s` WHERE id=:id',
+             self::TABLE_NAME
+         );
+         $sth = Database::getPDO()->prepare( $query );
+         // Si la préparation échoue
+         if( ! $sth ) {
+             return null;
+         }
+         $success = $sth->execute([ 'id' => $id ]);
+         // Si echec
+         if( ! $success ) {
+             return null;
+         }
+         // Ajout de l'id de l'item créé en base de données
+         $user = $sth->fetch();
+         // Si aucun user ne correspond
+         if( ! $user ) {
+             return null;
+         }
+         return new self( $user );
+     }
 }

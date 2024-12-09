@@ -17,18 +17,6 @@ class PageController
         ];
 
         $view->render( $data );
-        // Tests du UserModel (à supprimer après)
-        $bdd = [
-            'id' => 5,
-            'password' => 'hello_world_securité',
-            'email' => 'hello_world@hotmail.com',
-            'firstname' => 'Mayer',
-            'lastname' => 'Michl',
-            'phone_number' => '06 45 78 95 78',
-            'role' => '1'
-        ];
-        $mayermich = new UserModel($bdd);
-        var_dump( $mayermich );
     }
 
     // Page mentions légales
