@@ -39,17 +39,6 @@ class UserController extends Controller
      * Pages Administrateur
      */
 
-    // Admin: Affichage du formulaire de création d'un utilisateur
-    public function add(): void
-    {
-        $view = new View( 'user:admin:create' );
-
-        $data = [
-            'title' => 'Ajouter un utilisateur'
-        ];
-
-        $view->render( $data );
-    }
 
     // Admin: Traitement du formulaire de création d'un utilisateur
     public function create( ServerRequest $request ): void
@@ -62,10 +51,10 @@ class UserController extends Controller
 
         if( is_null( $user_created ) ) {
             // TODO: gérer une erreur
-            $this->redirect( '/admin/users/add' );
+            $this->redirect( '/users' );
         }
 
-        $this->redirect( '/admin/users' );
+        $this->redirect( '/accueil' );
     }
 
     // Admin: Liste

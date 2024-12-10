@@ -1,0 +1,26 @@
+<div>
+    <a href="/admin/users">🔙 Retour</a>
+</div>
+
+<h1>Ajouter votre bien</h1>
+<form action="/users" method="post" novalidate>
+    <div>
+        <label for="input-capacity">Capacity :</label>
+        <input type="capacity" name="capacity" id="input-capacity">
+    </div>
+    <div>
+        <label for="input-surface">surface en m2 :</label>
+        <input type="surface" name="surface" id="input-surface">
+    </div>
+    <div>
+        <label for="input-price_day">le prix par jour:</label>
+        <input type="text" name="price_day" id="input-price_day">
+    </div>
+    <div>
+        <label for="input-description">Description:</label>
+        <input type="text" name="description" id="input-description">
+    </div>
+    <div>
+        <input type="submit" value="Ajouter">
+    </div>
+</form>

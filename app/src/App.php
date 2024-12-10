@@ -6,19 +6,15 @@
 // Déclaration du namespace de ce fichier
 namespace App;
 
+use App\Controller\AccueilController;
 use Exception;
 use Throwable;
 
 use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
-use MiladRahimi\PhpRouter\Routing\Attributes;
 
-use App\Controller\AdminController;
-use App\Controller\AuthController;
 use App\Controller\UserController;
-use App\Controller\PageController;
-use App\Controller\TypeController;
-use App\Middleware\AdminMiddleware;
+use MiladRahimi\PhpRouter\Routing\Attributes;
 use Symplefony\View;
 
 final class App
@@ -60,37 +56,23 @@ final class App
         // {id} doit être un nombre
         $this->router->pattern( 'id', '\d+' );
 
-        // Pages communes
-        $this->router->get( '/', [ PageController::class, 'index' ] );
-        $this->router->get( '/mentions-legales', [ PageController::class, 'legalNotice' ]);
-
-        // TODO: Groupe Visiteurs (non-connectés)
-        // -- Pages d'admin --
         
-        // Pages d'admin
-        $adminAttributes = [
-            Attributes::PREFIX => '/admin',
-            Attributes::MIDDLEWARE => [ AdminMiddleware::class ]
-        ];
-        $this->router->group( $adminAttributes, function( Router $router ) {
-            $router->get( '', [ AdminController::class, 'dashboard' ]);
+        // Pages accueil
+        $AccueilAttributes = [
+        Attributes::PREFIX => '/accueil'];
 
-            // -- User --
-            // Ajout
-            $router->get( '/users/add', [ UserController::class, 'add' ] );
+        $this->router->group( $AccueilAttributes, function( Router $router ) {
+            $router->get( '', [ AccueilController::class, 'index' ] );
+            $router->get( '/room/add', [ AccueilController::class, 'add' ] );
+            $router->post( '/room', [ AccueilController::class, 'create' ]);
+            $router->get( '/mentions-legales', [ AccueilController::class, 'legalNotice' ]);
+
+            $router->get( '/users/subscribe', [ UserController::class, 'displaySubscribe' ] );
             $router->post( '/users', [ UserController::class, 'create' ] );
 
-            // Liste
-            $router->get( '/users', [ UserController::class, 'index' ]);
-
-            // Détail
-            $router->get( '/users/{id}', [ UserController::class, 'show' ] );
-
-            // -- Category --
-            // Liste
-            $router->get( '/types', [ TypeController::class, 'index' ]);
-
         });
+
+        
     }
 
     // Démarrage du routeur

@@ -15,8 +15,8 @@ class UserRepository extends Repository
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`password`,`email`,`firstname`,`lastname`,`phone_number`) 
-                VALUES (:password,:email,:firstname,:lastname,:phone_number)',
+                (`email`,`password`,`firstname`,`lastname`,`phone_number`) 
+                VALUES (:email,:password,:firstname,:lastname,:phone_number)',
             $this->getTableName()
         );
 
@@ -26,20 +26,24 @@ class UserRepository extends Repository
         if( ! $sth ) {
             return null;
         }
+
         $success = $sth->execute([
-            'password' => $user->getPassword(),
             'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'phone_number' => $user->getPhoneNumber()
             // 'role' => $user->getRole()
         ]);
+
         // Si echec de l'insertion
         if( ! $success ) {
             return null;
         }
+
         // Ajout de l'id de l'item créé en base de données
         $user->setId( $this->pdo->lastInsertId() );
+
         return $user;
     }
     /* cRud: Read tous les items */
