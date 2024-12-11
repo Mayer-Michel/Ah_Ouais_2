@@ -2,22 +2,21 @@
 
 namespace App\Controller;
 
-use App\Model\Entity\Room;
+
 use App\Model\Repository\RepoManager;
-use Laminas\Diactoros\ServerRequest;
 use Symplefony\View;
 
 
 use Symplefony\Controller;
 
 
-class RoomController extends Controller
+class RoomUserController extends Controller
 {
 
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:rooms' );
+        $view = new View( 'room:user:rooms' );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',
@@ -29,25 +28,10 @@ class RoomController extends Controller
 
         }
 
-    public function create( ServerRequest $request ): void
-    {
-        $room_data = $request->getParsedBody();
-
-        $room = new Room( $room_data );
-
-        $room_created = RepoManager::getRM()->getRoomRepo()->create( $room );
-
-        if( is_null( $room_created ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/rooms/add' );
-        }
-
-        $this->redirect( '/rooms' );
-    }
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:' );
+        $view = new View( 'room:details' );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     

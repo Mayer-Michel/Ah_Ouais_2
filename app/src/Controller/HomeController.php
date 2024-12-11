@@ -21,5 +21,16 @@ class HomeController extends Controller
 
         $view->render($data);
 
-        }
+    }
+
+    public function add(): void
+    {
+        $view = new View( 'users:create' );
+
+        $data = [
+            'title' => 'creation de compte'
+        ];
+
+        $view->render( $data );
+    }
     }

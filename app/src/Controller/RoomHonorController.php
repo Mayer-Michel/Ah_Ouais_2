@@ -11,13 +11,25 @@ use Symplefony\View;
 use Symplefony\Controller;
 
 
-class RoomController extends Controller
+class RoomHonorController extends Controller
 {
+
+    // Affichage du formulaire de création d'un utilisateur
+    public function add(): void
+    {
+        $view = new View( 'room:honor:create' );
+
+        $data = [
+            'title' => 'Ajouter un bien'
+        ];
+
+        $view->render( $data );
+    }
 
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:rooms' );
+        $view = new View( 'room:honor:rooms' );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',
@@ -39,7 +51,7 @@ class RoomController extends Controller
 
         if( is_null( $room_created ) ) {
             // TODO: gérer une erreur
-            $this->redirect( '/rooms/add' );
+            $this->redirect( '/rooms-honor/add' );
         }
 
         $this->redirect( '/rooms' );
@@ -47,7 +59,7 @@ class RoomController extends Controller
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:' );
+        $view = new View( 'room:honor:details' );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     
