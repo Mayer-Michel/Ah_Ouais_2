@@ -29,21 +29,6 @@ class RoomController extends Controller
 
         }
 
-    public function create( ServerRequest $request ): void
-    {
-        $room_data = $request->getParsedBody();
-
-        $room = new Room( $room_data );
-
-        $room_created = RepoManager::getRM()->getRoomRepo()->create( $room );
-
-        if( is_null( $room_created ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/rooms/add' );
-        }
-
-        $this->redirect( '/rooms' );
-    }
 
     public function show( int $id ): void
     {

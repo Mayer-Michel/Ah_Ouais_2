@@ -10,7 +10,7 @@ use Symplefony\View;
 
 
 use Symplefony\Controller;
-
+use Symplefony\Database;
 
 class UserController extends Controller
 {
@@ -31,7 +31,6 @@ class UserController extends Controller
     public function create( ServerRequest $request ): void
     {
         $user_data = $request->getParsedBody();
-
         $user = new Users( $user_data );
 
         $user_created = RepoManager::getRM()->getUserRepo()->create( $user );

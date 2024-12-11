@@ -28,7 +28,7 @@ class UserRepository extends Repository
 
         $success = $sth->execute([
             'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
+            'password' => password_hash($user->getPassword(), PASSWORD_BCRYPT),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'phone_number' => $user->getPhone_number()

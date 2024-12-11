@@ -7,10 +7,11 @@
 namespace App;
 
 use App\Controller\HomeController;
-use App\Controller\HonorController;
+use App\Controller\LoginController;
 use App\Controller\RoomController;
 use App\Controller\RoomHonorController;
 use App\Controller\RoomUserController;
+
 use Exception;
 use Throwable;
 
@@ -88,7 +89,9 @@ final class App
         $this->router->post('/rooms', [ UserController::class, 'index' ]);
         $this->router->get('/profile/{id}', [ UserController::class, 'show' ]);
         
-        // $this->router->get( '/accueil', [ RoomController::class, 'show' ] );
+        // page login
+        $this->router->get('/login', [LoginController::class, 'show']);
+        $this->router->post('/login', [LoginController::class, 'login']);
 
         
     }

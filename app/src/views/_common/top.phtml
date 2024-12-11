@@ -1,8 +1,26 @@
+<!-- templates/_header.php -->
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?></title>
+    <title><?php echo $title ?? 'Default Title'; ?></title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+
+<!-- Navigation Bar -->
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/rooms">Rooms</a></li>
+            <li><a href="/rooms-honor">Honor Rooms</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/profile/<?php echo $_SESSION['user_id'] ?? ''; ?>">Profile</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="content">

@@ -1,26 +1,140 @@
-<div>
-    <a href="/rooms">🔙 Retour</a>
-</div>
+<link rel="stylesheet" href="/style.css">
 
-<h1>Ajouter un bien</h1>
-<form action="/rooms" method="post" novalidate>
+<h1>Poster un logement</h1>
+
+ 
+<!-- Formulaire pour poster un logement -->
+<form action="/" method="post" enctype="multipart/form-data" novalidate>
+    <!-- Type de logement -->
     <div>
-        <label for="input-capacity">Capacity :</label>
-        <input type="text" name="capacity" id="input-capacity">
+        <label for="select-type-logement">Type de logement :</label>
+        <select name="type_id" id="select-type-logement" required>
+            <option value="1">Appartement</option>
+            <option value="2">Maison</option>
+            <option value="3">Studio</option>
+            <option value="4">Villa</option>
+            <option value="5">Duplex</option>
+            <option value="6">Loft</option>
+            <option value="7">Chambre</option>
+            <option value="8">Penthouse</option>
+            <option value="9">Bungalow</option>
+            <option value="10">Manoir</option>
+            <option value="11">Chalet</option>
+            <option value="12">Cottage</option>
+            <option value="13">Tente</option>
+            <option value="14">Bateau</option>
+            <option value="15">Caravane</option>
+            <option value="16">Maison mobile</option>
+            <option value="17">Yourte</option>
+            <option value="18">Mobil-home</option>
+        </select>
+    </div>
+ 
+    
+    <!-- Adresse -->
+ 
+    <div>
+        <label for="pays">Pays :</label>
+        <select name="pays" id="pays" required>
+            <option value="france">France</option>
+            <option value="usa">États-Unis</option>
+            <option value="spain">Espagne</option>
+            <option value="italy">Italie</option>
+            <option value="germany">Allemagne</option>
+            <option value="uk">Royaume-Uni</option>
+            <option value="japan">Japon</option>
+            <option value="australia">Australie</option>
+            <option value="canada">Canada</option>
+            <option value="brazil">Brésil</option>
+            <option value="mexico">Mexique</option>
+            <option value="india">Inde</option>
+            <option value="china">Chine</option>
+            <option value="south_korea">Corée du Sud</option>
+            <option value="south_africa">Afrique du Sud</option>
+            <option value="thailand">Thaïlande</option>
+            <option value="argentina">Argentine</option>
+            <option value="sweden">Suède</option>
+            <option value="netherlands">Pays-Bas</option>
+            <option value="switzerland">Suisse</option>
+            <option value="dubai">Émirats Arabes Unis (Dubai)</option>
+            <option value="singapore">Singapour</option>
+        </select>
+ 
     </div>
     <div>
-        <label for="input-surface">Surface :</label>
-        <input type="text" name="surface" id="input-surface">
+        <label for="ville">Ville :</label>
+            <input type="text" name="ville" id="ville" required>
     </div>
     <div>
-        <label for="input-price_day">Prix par jour :</label>
-        <input type="text" name="price_day" id="input-price_day">
+        <label for="adresse">Adresse : </label>
+        <input type="text" name="adresse" id="adresse" required>
+        
     </div>
+ 
+    
+   
+ 
     <div>
-        <label for="input-description">Nom :</label>
-        <input type="text" name="description" id="input-description">
+        <label for="code_postal">Code postal :</label>
+        <input type="text" name="code_postal" id="zip_code" required>
+ 
     </div>
+ 
+    <!-- Autres champs -->
     <div>
-        <input type="submit" value="Ajouter">
+        <label for="price">Prix : </label>
+        <input type="number" name="price" id="price">
+    </div>
+ 
+    <div>
+        <label for="date">Date d'ajout : </label>
+        <input type="date" name="date_added" id="date">
+    </div>
+ 
+    <div>
+    <label for="image-bien">Image : </label>
+    <input type="file" name="image" id="image-bien">
+</div>
+ 
+    <div>
+        <input type="submit" value="Poster">
     </div>
 </form>
+ 
+<h1>Liste de vos logements</h1>
+ 
+<?php if (!empty($logements)): ?>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Adresse</th>
+                <th>Prix</th>
+                <th>Date d'ajout</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($logements as $logement): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($logement['id']); ?></td>
+                    <td><?php echo htmlspecialchars($logement['type_id']); ?></td>
+                    <td><?php echo htmlspecialchars($logement['adresse_id']); ?></td>
+                    <td><?php echo htmlspecialchars($logement['price']); ?></td>
+                    <td><?php echo htmlspecialchars($logement['date_added']); ?></td>
+                    <td>
+                        <!-- Afficher l'image si elle existe -->
+                        <?php if (!empty($logement['image'])): ?>
+                            <img src="/image/<?php echo htmlspecialchars($logement['image']); ?>" alt="Image du bien" width="100">
+                        <?php else: ?>
+                            Pas d'image
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>Vous n'avez pas encore posté de logement.</p>
+<?php endif; ?>
