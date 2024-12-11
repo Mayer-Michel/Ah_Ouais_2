@@ -2,16 +2,15 @@
 
 namespace App\Model\Repository;
 
+use App\Model\Entity\Users;
 use Symplefony\Model\Repository;
-
-use App\Model\Entity\User;
 
 class UserRepository extends Repository
 {
     protected function getTableName(): string { return 'users'; }
-    /* Crud: Create */
 
-    public function create( User $user ): ?User
+    /* Crud: Create */
+    public function create( Users $user ): ?Users
     {
         $query = sprintf(
             'INSERT INTO `%s` 
@@ -32,8 +31,7 @@ class UserRepository extends Repository
             'password' => $user->getPassword(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhoneNumber()
-            // 'role' => $user->getRole()
+            'phone_number' => $user->getPhone_number()
         ]);
 
         // Si echec de l'insertion
@@ -46,14 +44,18 @@ class UserRepository extends Repository
 
         return $user;
     }
+
     /* cRud: Read tous les items */
     public function getAll(): array
     {
-        return $this->readAll( User::class );
+        return $this->readAll( Users::class );
     }
+
     /* cRud: Read un item par son id */
-    public function getById( int $id ): ?User
+    public function getById( int $id ): ?Users
     {
-        return $this->readById( User::class, $id );
+        return $this->readById( Users::class, $id );
     }
+
+
 }

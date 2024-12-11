@@ -1,6 +1,9 @@
-<h1>Créer mon compte</h1>
-<h1>Ajouter un nouvel utilisateur</h1>
-<form action="/users" method="post" novalidate>
+<div>
+    <a href="/rooms">🔙 Retour</a>
+</div>
+
+<h1>Creation de compte</h1>
+<form action="/rooms" method="post" novalidate>
     <div>
         <label for="input-email">Email :</label>
         <input type="email" name="email" id="input-email">
@@ -18,10 +21,9 @@
         <input type="text" name="lastname" id="input-lastname">
     </div>
     <div>
-        <label for="input-phone">Téléphone :</label>
-        <input type="tel" name="phone_number" id="input-phone">
+        <label for="input-phone_number">Téléphone :</label>
+        <input type="tel" name="phone_number" id="input-phone_numbre">
     </div>
-    <!-- TODO: Role -->
     <div>
         <input type="submit" value="Ajouter">
     </div>

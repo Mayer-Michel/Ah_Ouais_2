@@ -6,7 +6,8 @@
 // Déclaration du namespace de ce fichier
 namespace App;
 
-use App\Controller\AccueilController;
+use App\Controller\HomeController;
+use App\Controller\RoomController;
 use Exception;
 use Throwable;
 
@@ -39,6 +40,7 @@ final class App
     // Démarrage de l'application
     public function start(): void
     {
+        session_start();
         $this->registerRoutes();
         $this->startRouter();
     }
@@ -57,20 +59,22 @@ final class App
         $this->router->pattern( 'id', '\d+' );
 
         
-        // Pages accueil
-        $AccueilAttributes = [
-        Attributes::PREFIX => '/accueil'];
+        // Page Home 
+        $this->router->get( '/', [ HomeController::class, 'index' ] );
 
-        $this->router->group( $AccueilAttributes, function( Router $router ) {
-            $router->get( '', [ AccueilController::class, 'index' ] );
-            $router->get( '/room/add', [ AccueilController::class, 'add' ] );
-            $router->post( '/room', [ AccueilController::class, 'create' ]);
-            $router->get( '/mentions-legales', [ AccueilController::class, 'legalNotice' ]);
+        // Page rooms
+        
+        $this->router->get('/rooms/add', [ RoomController::class, 'add' ]);
+        $this->router->post('/rooms', [ RoomController::class, 'create' ]);
+        $this->router->get('/rooms', [ RoomController::class, 'index' ]);
 
-            $router->get( '/users/subscribe', [ UserController::class, 'displaySubscribe' ] );
-            $router->post( '/users', [ UserController::class, 'create' ] );
-
-        });
+        // Page profil
+        $this->router->get('/register', [ UserController::class, 'add' ]);
+        $this->router->post('/register', [ UserController::class, 'create' ]);
+        $this->router->post('/rooms', [ UserController::class, 'index' ]);
+        $this->router->get('/profile/{id}', [ UserController::class, 'show' ]);
+        
+        // $this->router->get( '/accueil', [ RoomController::class, 'show' ] );
 
         
     }

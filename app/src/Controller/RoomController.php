@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-
-use App\Model\Entity\Users;
+use App\Model\Entity\Room;
 use App\Model\Repository\RepoManager;
 use Laminas\Diactoros\ServerRequest;
 use Symplefony\View;
@@ -12,36 +11,19 @@ use Symplefony\View;
 use Symplefony\Controller;
 
 
-class UserController extends Controller
+class RoomController extends Controller
 {
 
     // Affichage du formulaire de création d'un utilisateur
     public function add(): void
     {
-        $view = new View( 'user:create' );
+        $view = new View( 'room:create' );
 
         $data = [
-            'title' => 'creation de compte'
+            'title' => 'Ajouter un bien'
         ];
 
         $view->render( $data );
-    }
-
-
-    public function create( ServerRequest $request ): void
-    {
-        $user_data = $request->getParsedBody();
-
-        $user = new Users( $user_data );
-
-        $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
-
-        if( is_null( $user_created ) ) {
-            // TODO: gérer une erreur
-            $this->redirect( '/register' );
-        }
-
-        $this->redirect( '/rooms' );
     }
 
     // Page d'accueil 
@@ -59,21 +41,37 @@ class UserController extends Controller
 
         }
 
+    public function create( ServerRequest $request ): void
+    {
+        $room_data = $request->getParsedBody();
+
+        $room = new Room( $room_data );
+
+        $room_created = RepoManager::getRM()->getRoomRepo()->create( $room );
+
+        if( is_null( $room_created ) ) {
+            // TODO: gérer une erreur
+            $this->redirect( '/rooms/add' );
+        }
+
+        $this->redirect( '/rooms' );
+    }
+
     public function show( int $id ): void
     {
-        $view = new View( 'user:details' );
+        $view = new View( 'room:' );
     
-        $user= RepoManager::getRM()->getUserRepo()->getById( $id );
+        $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     
         // Si l'utilisateur demandé n'existe pas
-        if( is_null( $user ) ) {
+        if( is_null( $room ) ) {
             View::renderError( 404 );
             return;
         }
     
         $data = [
-            'title' => 'User: '. $user->getLastname(),
-            'user' => $user
+            'title' => 'Room: '. $room->getDescription(),
+            'room' => $room
         ];
     
         $view->render( $data );

@@ -1,13 +1,18 @@
 <div>
-    <a href="/admin">🏠 Retour</a>
+    <a href="/">RETOUR</a>
 </div>
-
-<h1>Liste des chambres</h1>
+<div>
+    <a href="/rooms/add">Ajouter un bien</a>
+</div>
+<div>
+    <a href="/register">create un compte</a>
+</div>
+<h1>Nos Biens</h1>
 <?php if( !empty($rooms) ):?>
 <ul>
     <?php foreach( $rooms as $room ):?>
         <li>
-            <h1><?php  printf('%s %s', $room->getCapacity(), $room->getSurface() ) ?></h1>
+            <h1><?php  printf('%s', $room->getDescription() ) ?></h1>
             <ul>
                 <li>Id: <?php echo $room->getId() ?></li>
                 <li>Capacity: <?php echo $room->getCapacity() ?></li>
@@ -16,9 +21,8 @@
                 <li>Description: <?php echo $room->getDescription() ?></li>
             </ul>
         </li>
-
     <?php endforeach ?>
 </ul>
 <?php else: ?>
-    <div>Il n'y a pas des chambres.</div>
+    <div>Aucun bien disciponible.</div>
 <?php endif ?>
