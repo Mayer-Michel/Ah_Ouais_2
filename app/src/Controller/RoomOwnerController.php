@@ -11,7 +11,7 @@ use Symplefony\View;
 use Symplefony\Controller;
 
 
-class RoomHonorController extends Controller
+class RoomOwnerController extends Controller
 {
 
     // Affichage du formulaire de création d'un utilisateur
