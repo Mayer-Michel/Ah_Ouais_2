@@ -3,14 +3,14 @@
     <a href="/">RETOUR</a>
 </div>
 <div>
-    <a href="/rooms-honor/add">Ajouter un bien</a>
+    <a href="/rooms-owner/add">Ajouter un bien</a>
 </div>
 
 <h1>Nos Biens</h1>
 <?php if( !empty($rooms) ):?>
 <ul>
     <?php foreach( $rooms as $room ):?>
-        <li>
+        <li> 
             <h1><?php  printf('%s', $room->getDescription() ) ?></h1>
             <ul>
                 <li>Id: <?php echo $room->getId() ?></li>

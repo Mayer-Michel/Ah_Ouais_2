@@ -14,8 +14,8 @@ class RoomRepository extends Repository
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`capacity`,`surface`,`price_day`,`description`) 
-                VALUES (:capacity,:surface,:price_day,:description)',
+                (`type_id`,`user_id`,`address_id`,`capacity`,`surface`,`price_day`,`description`) 
+                VALUES (:type_id, :user_id, :address_id, :capacity, :surface, :price_day, :description)',
             $this->getTableName()
         );
 
@@ -27,6 +27,9 @@ class RoomRepository extends Repository
         }
 
         $success = $sth->execute([
+            'type_id' => $room->getType_id(),
+            'user_id' => $room->getUser_id(),
+            'address_id' => $room->getAddress_id(),
             'capacity' => $room->getCapacity(),
             'surface' => $room->getSurface(),
             'price_day' => $room->getPrice_day(),

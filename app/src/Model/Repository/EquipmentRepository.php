@@ -2,20 +2,20 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Types;
+use App\Model\Entity\Equipments;
 use Symplefony\Model\Repository;
 
-class TypeRepository extends Repository
+class EquipmentRepository extends Repository
 {
-    protected function getTableName(): string { return 'types'; }
+    protected function getTableName(): string { return 'equipments'; }
 
     /* Crud: Create */
-    public function create( Types $type ): ?Types
+    public function create( Equipments $equipment ): ?Equipments
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`type`) 
-                VALUES (:type)',
+                (`type_equipment`) 
+                VALUES (:type_equipment)',
             $this->getTableName()
         );
 
@@ -27,7 +27,7 @@ class TypeRepository extends Repository
         }
 
         $success = $sth->execute([
-            'type' => $type->getType(),
+            'type_equipment' => $equipment->getType_equipments(),
         ]);
 
         // Si echec de l'insertion
@@ -36,21 +36,21 @@ class TypeRepository extends Repository
         }
 
         // Ajout de l'id de l'item créé en base de données
-        $type->setId( $this->pdo->lastInsertId() );
+        $equipment->setId( $this->pdo->lastInsertId() );
 
-        return $type;
+        return $equipment;
     }
 
     /* cRud: Read tous les items */
     public function getAll(): array
     {
-        return $this->readAll( Types::class );
+        return $this->readAll( Equipments::class );
     }
 
     /* cRud: Read un item par son id */
-    public function getById( int $id ): ?Types
+    public function getById( int $id ): ?Equipments
     {
-        return $this->readById( Types::class, $id );
+        return $this->readById( Equipments::class, $id );
     }
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\Users;
+use App\Session;
 use Symplefony\View;
 use Symplefony\Database;
 use Exception;
@@ -51,13 +53,10 @@ class LoginController extends Controller
                 return;
             }
 
+            $user_obj = new Users( $user );
+
             // Start session and set user info
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'email' => $user['email'],
-                'firstname' => $user['firstname'],
-                'lastname' => $user['lastname'],
-            ];
+            Session::set(Session::USER, $user_obj);
 
             // Redirect to the home page
             $this->redirect("/");

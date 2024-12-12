@@ -7,6 +7,5 @@ use Symplefony\AbstractSession;
  */
 final class Session extends AbstractSession
 {
-    // Exemple de déclaration d'une clé
-    public const UNE_CLE = 'NOM_DE_LA_CLE';
+    public const USER = 'user';
 }

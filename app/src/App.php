@@ -9,7 +9,7 @@ namespace App;
 use App\Controller\HomeController;
 use App\Controller\LoginController;
 use App\Controller\RoomController;
-use App\Controller\RoomHonorController;
+use App\Controller\RoomOwnerController;
 use App\Controller\RoomUserController;
 
 use Exception;
@@ -19,7 +19,6 @@ use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
 
 use App\Controller\UserController;
-use MiladRahimi\PhpRouter\Routing\Attributes;
 use Symplefony\View;
 
 final class App
@@ -47,6 +46,7 @@ final class App
         session_start();
         $this->registerRoutes();
         $this->startRouter();
+        var_dump(Session::get(Session::USER));
     }
 
     private function __construct()
@@ -76,11 +76,12 @@ final class App
 
         $this->router->get('/rooms-user', [ RoomUserController::class, 'index' ]);
 
-        // Page honor rooms
+        // Page owner rooms
 
-        $this->router->get('/rooms-honor/add', [ RoomHonorController::class, 'add' ]);
-        $this->router->post('/rooms-honor', [ RoomHonorController::class, 'create' ]);
-        $this->router->get('/rooms-honor', [ RoomHonorController::class, 'index' ]);
+        $this->router->get('/rooms-owner/add', [ RoomOwnerController::class, 'add' ]);
+        $this->router->post('/rooms-owner', [ RoomOwnerController::class, 'create' ]);
+        $this->router->get('/rooms-owner', [ RoomOwnerController::class, 'index' ]);
+
 
         // Page profil
 

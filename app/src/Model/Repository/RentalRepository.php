@@ -2,20 +2,20 @@
 
 namespace App\Model\Repository;
 
-use App\Model\Entity\Users;
+use App\Model\Entity\Rentals;
 use Symplefony\Model\Repository;
 
-class UserRepository extends Repository
+class RentalRepository extends Repository
 {
-    protected function getTableName(): string { return 'users'; }
+    protected function getTableName(): string { return 'rentals'; }
 
     /* Crud: Create */
-    public function create( Users $user ): ?Users
+    public function create( Rentals $rental ): ?Rentals
     {
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`email`,`password`,`firstname`,`lastname`,`phone_number`) 
-                VALUES (:email,:password,:firstname,:lastname,:phone_number)',
+                (`user_id`,`room_id`,`date_start`,`date_end`) 
+                VALUES (:user_id,:room_id,:date_start,:date_end)',
             $this->getTableName()
         );
 
@@ -27,11 +27,7 @@ class UserRepository extends Repository
         }
 
         $success = $sth->execute([
-            'email' => $user->getEmail(),
-            'password' => password_hash($user->getPassword(), PASSWORD_BCRYPT),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhone_number()
+            'user_id' => $rental->getUser(),
         ]);
 
         // Si echec de l'insertion
@@ -40,12 +36,10 @@ class UserRepository extends Repository
         }
 
         // Ajout de l'id de l'item créé en base de données
-        $user->setId( $this->pdo->lastInsertId() );
+        $equipment->setId( $this->pdo->lastInsertId() );
 
-        return $user;
+        return $equipment;
     }
-
-    
 
     /* cRud: Read tous les items */
     public function getAll(): array

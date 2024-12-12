@@ -4,7 +4,7 @@
 
  
 <!-- Formulaire pour poster un logement -->
-<form action="/" method="post" enctype="multipart/form-data" novalidate>
+<form action="/rooms-owner" method="post" enctype="multipart/form-data" novalidate>
     <!-- Type de logement -->
     <div>
         <label for="select-type-logement">Type de logement :</label>
@@ -35,7 +35,7 @@
  
     <div>
         <label for="pays">Pays :</label>
-        <select name="pays" id="pays" required>
+        <select name="country" id="pays" required>
             <option value="france">France</option>
             <option value="usa">États-Unis</option>
             <option value="spain">Espagne</option>
@@ -63,11 +63,11 @@
     </div>
     <div>
         <label for="ville">Ville :</label>
-            <input type="text" name="ville" id="ville" required>
+            <input type="text" name="city" id="ville" required>
     </div>
     <div>
         <label for="adresse">Adresse : </label>
-        <input type="text" name="adresse" id="adresse" required>
+        <input type="text" name="address" id="address" required>
         
     </div>
  
@@ -76,19 +76,29 @@
  
     <div>
         <label for="code_postal">Code postal :</label>
-        <input type="text" name="code_postal" id="zip_code" required>
+        <input type="text" name="postal_code" id="zip_code" required>
  
     </div>
  
     <!-- Autres champs -->
     <div>
         <label for="price">Prix : </label>
-        <input type="number" name="price" id="price">
+        <input type="number" name="price_day" id="price">
     </div>
  
     <div>
-        <label for="date">Date d'ajout : </label>
-        <input type="date" name="date_added" id="date">
+        <label for="capacity">Couchage : </label>
+        <input type="number" name="capacity" id="capacity">
+    </div>
+
+    <div>
+        <label for="surface">surface : </label>
+        <input type="number" name="surface" id="surface">
+    </div>
+
+    <div>
+        <label for="description">Description : </label>
+        <input type="text" name="description" id="description">
     </div>
  
     <div>
