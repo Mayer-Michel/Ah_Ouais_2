@@ -1,46 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Biens</title>
-    <link rel="stylesheet" href="/style.css"> <!-- Link to your CSS -->
-</head>
-<body>
+<link rel="stylesheet" href="/style.css">
 
-<div class="container">
-    <!-- Navigation -->
-    <div class="navigation">
-        <a href="/" class="back-link">RETOUR</a>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-        <h1>Nos Biens</h1>
-    </div>
-
-    <!-- Room Listings -->
-    <div class="room-listing">
-        <?php if( !empty($rooms) ): ?>
-            <ul class="rooms">
-                <?php foreach( $rooms as $room ): ?>
-                    <li class="room-item">
-                        <h2 class="room-title"><?php printf('%s', $room->getDescription() ) ?></h2>
-                        <ul class="room-details">
-                            <li>Id: <?php echo $room->getId() ?></li>
-                            <li>Capacity: <?php echo $room->getCapacity() ?></li>
-                            <li>Surface: <?php echo $room->getSurface() ?></li>
-                            <li>Prix par jour: <?php echo $room->getPrice_day() ?></li>
-                            <li>Description: <?php echo $room->getDescription() ?></li>
-                        </ul>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <div class="no-rooms">Aucun bien disponible.</div>
-        <?php endif; ?>
-    </div>
+<div>
+    <a href="/">RETOUR</a>
+</div>
+<div>
+    <a href="/login">LOGIN</a>
 </div>
 
-</body>
-</html>
+<h1>Nos Biens</h1>
+<?php if( !empty($rooms) ): ?>
+<ul>
+    <?php foreach( $rooms as $room ): ?>
+        <li> 
+            <h1><?php echo htmlspecialchars($room->getDescription()); ?></h1>
+            <ul>
+                <li>Id: <?php echo $room->getId(); ?></li>
+                <li>Capacity: <?php echo $room->getCapacity(); ?></li>
+                <li>Surface: <?php echo $room->getSurface(); ?></li>
+                <li>Prix par jour: <?php echo $room->getPrice_day(); ?></li>
+                <li>Description: <?php echo htmlspecialchars($room->getDescription()); ?></li>
+                
+                <!-- Display the image if available -->
+                <?php if ($room->getImage()): ?>
+                    <li>
+                        <strong>Image:</strong><br>
+                        <img src="<?php echo '/' . $room->getImage(); ?>" alt="Room Image" style="max-width: 300px; height: auto;">
+                    </li>
+                <?php else: ?>
+                    <li><strong>Image:</strong> No image available</li>
+                <?php endif; ?>
+            </ul>
+        </li>
+    <?php endforeach; ?>
+</ul>
+<?php else: ?>
+    <div>Aucun bien disponible.</div>
+<?php endif; ?>

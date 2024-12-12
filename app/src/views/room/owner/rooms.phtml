@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/style.css">
+
 <div>
     <a href="/">RETOUR</a>
 </div>
@@ -7,21 +8,31 @@
 </div>
 
 <h1>Nos Biens</h1>
-<?php if( !empty($rooms) ):?>
+<?php if( !empty($rooms) ): ?>
 <ul>
-    <?php foreach( $rooms as $room ):?>
+    <?php foreach( $rooms as $room ): ?>
         <li> 
-            <h1><?php  printf('%s', $room->getDescription() ) ?></h1>
+            <h1><?php echo htmlspecialchars($room->getDescription()); ?></h1>
             <ul>
-                <li>Id: <?php echo $room->getId() ?></li>
-                <li>Capacity: <?php echo $room->getCapacity() ?></li>
-                <li>Surface: <?php echo $room->getSurface() ?></li>
-                <li>Prix par jour: <?php echo $room->getPrice_day() ?></li>
-                <li>Description: <?php echo $room->getDescription() ?></li>
+                <li>Id: <?php echo $room->getId(); ?></li>
+                <li>Capacity: <?php echo $room->getCapacity(); ?></li>
+                <li>Surface: <?php echo $room->getSurface(); ?></li>
+                <li>Prix par jour: <?php echo $room->getPrice_day(); ?></li>
+                <li>Description: <?php echo htmlspecialchars($room->getDescription()); ?></li>
+                
+                <!-- Display the image if available -->
+                <?php if ($room->getImage()): ?>
+                    <li>
+                        <strong>Image:</strong><br>
+                        <img src="<?php echo '/' . $room->getImage(); ?>" alt="Room Image" style="max-width: 300px; height: auto;">
+                    </li>
+                <?php else: ?>
+                    <li><strong>Image:</strong> No image available</li>
+                <?php endif; ?>
             </ul>
         </li>
-    <?php endforeach ?>
+    <?php endforeach; ?>
 </ul>
 <?php else: ?>
-    <div>Aucun bien disciponible.</div>
-<?php endif ?>
+    <div>Aucun bien disponible.</div>
+<?php endif; ?>

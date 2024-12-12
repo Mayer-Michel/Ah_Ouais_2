@@ -46,7 +46,28 @@ class RoomOwnerController extends Controller
     public function create( ServerRequest $request ): void
     {
         $room_data = $request->getParsedBody();
-        
+        $file = $_FILES['image'] ?? null;
+
+        // Handle image upload if provided
+        $imagePath = null;
+        if ($file && $file['error'] === UPLOAD_ERR_OK) {
+            $uploadDirectory = '../public/image/';
+    
+            // Ensure the directory exists
+            if (!is_dir($uploadDirectory)) {
+                mkdir($uploadDirectory, 0777, true);  // Create directory with permissions
+            }
+
+            $fileName = uniqid() . '_' . basename($file['name']);
+            $imagePath = $fileName;
+
+            if (!move_uploaded_file($file['tmp_name'], $imagePath)) {
+                echo "Failed to upload image.";
+                $this->redirect('/rooms-owner/add');
+                return;
+            }   
+        }
+        $image_data['image'] = $imagePath ?? null;
         $address = new Address( $room_data );
         $address_created = RepoManager::getRM()->getAddressRepo()->create( $address );
         if( is_null( $address_created ) ) {
@@ -61,7 +82,8 @@ class RoomOwnerController extends Controller
             'capacity' => $room_data['capacity'],
             'surface' => $room_data['surface'],
             'price_day' => $room_data['price_day'],
-            'description' => $room_data['description']
+            'description' => $room_data['description'],
+            'image' => $image_data['image']
         ];
 
         $room = new Room( $data_room );
@@ -82,7 +104,6 @@ class RoomOwnerController extends Controller
         $view = new View( 'room:owner:details' );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
-        var_dump($room);die;
     
         // Si l'utilisateur demandé n'existe pas
         if( is_null( $room ) ) {

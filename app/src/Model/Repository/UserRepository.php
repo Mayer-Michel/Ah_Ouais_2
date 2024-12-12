@@ -2,6 +2,7 @@
 
 namespace App\Model\Repository;
 
+
 use App\Model\Entity\Users;
 use Symplefony\Model\Repository;
 
@@ -43,9 +44,7 @@ class UserRepository extends Repository
         $user->setId( $this->pdo->lastInsertId() );
 
         return $user;
-    }
-
-    
+    }    
 
     /* cRud: Read tous les items */
     public function getAll(): array

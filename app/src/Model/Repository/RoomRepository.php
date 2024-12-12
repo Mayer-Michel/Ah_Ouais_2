@@ -12,10 +12,11 @@ class RoomRepository extends Repository
     /* Crud: Create */
     public function create( Room $room ): ?Room
     {
+        
         $query = sprintf(
             'INSERT INTO `%s` 
-                (`type_id`,`user_id`,`address_id`,`capacity`,`surface`,`price_day`,`description`) 
-                VALUES (:type_id, :user_id, :address_id, :capacity, :surface, :price_day, :description)',
+                (`type_id`,`user_id`,`address_id`,`capacity`,`surface`,`price_day`,`description`,`image`) 
+                VALUES (:type_id, :user_id, :address_id, :capacity, :surface, :price_day, :description, :image)',
             $this->getTableName()
         );
 
@@ -33,7 +34,8 @@ class RoomRepository extends Repository
             'capacity' => $room->getCapacity(),
             'surface' => $room->getSurface(),
             'price_day' => $room->getPrice_day(),
-            'description' => $room->getDescription()
+            'description' => $room->getDescription(),
+            'image' => $room->getImage()
         ]);
 
         // Si echec de l'insertion
