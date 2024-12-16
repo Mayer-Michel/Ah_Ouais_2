@@ -16,7 +16,7 @@ class RoomUserController extends Controller
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:user:rooms' );
+        $view = new View( 'room:user:rooms', auth_controller: AuthController::class );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',
@@ -31,7 +31,7 @@ class RoomUserController extends Controller
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:details' );
+        $view = new View( 'room:details', auth_controller: AuthController::class );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     

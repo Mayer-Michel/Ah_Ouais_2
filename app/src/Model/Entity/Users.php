@@ -6,6 +6,15 @@ use Symplefony\Model\Entity;
 
 class Users extends Entity
 {
+    /**
+     * Rôle commercial
+     */
+    public const ROLE_OWNER = 1;
+    /**
+     * Rôle client
+     */
+    public const ROLE_CUSTOMER = 2;
+
     protected string $email;
     public function getEmail(): string { return $this->email; }
     public function setEmail( string $email ): self
@@ -43,6 +52,17 @@ class Users extends Entity
     public function setPhone_number( string $phone_number ): self
     {
         $this->phone_number = $phone_number;
+        return $this;
+    }
+
+      /**
+     * Colonne "rôle"
+     */
+    protected int $role;
+    public function getRole(): int { return $this->role; }
+    public function setRole( int $value ): self
+    {
+        $this->role = $value;
         return $this;
     }
     

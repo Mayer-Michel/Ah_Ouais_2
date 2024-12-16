@@ -21,5 +21,21 @@ class Rentals extends Entity
     {
         $this->date_end = $date_end;
         return $this;
-    }    
+    } 
+
+    protected int $user_id;
+    public function getUser_id(): int { return $this->user_id; }
+    public function setUser_id( int $user_id ): self
+    {
+        $this->user_id = $user_id;
+        return $this;
+    }  
+    
+    protected int $room_id;
+    public function getRoom_id(): int { return $this->room_id; }
+    public function setRoom_id( int $room_id ): self
+    {
+        $this->room_id = $room_id;
+        return $this;
+    }  
 }

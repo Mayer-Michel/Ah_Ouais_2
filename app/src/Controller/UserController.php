@@ -10,7 +10,6 @@ use Symplefony\View;
 
 
 use Symplefony\Controller;
-use Symplefony\Database;
 
 class UserController extends Controller
 {
@@ -18,7 +17,7 @@ class UserController extends Controller
     // Affichage du formulaire de création d'un utilisateur
     public function add(): void
     {
-        $view = new View( 'user:create' );
+        $view = new View( 'user:create', auth_controller: AuthController::class );
 
         $data = [
             'title' => 'creation de compte'
@@ -46,7 +45,7 @@ class UserController extends Controller
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:rooms' );
+        $view = new View( 'room:rooms', auth_controller: AuthController::class );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',

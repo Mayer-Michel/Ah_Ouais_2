@@ -19,7 +19,7 @@ class RoomOwnerController extends Controller
     // Affichage du formulaire de création d'un utilisateur
     public function add(): void
     {
-        $view = new View( 'room:owner:create' );
+        $view = new View( 'room:owner:create', auth_controller: AuthController::class );
 
         $data = [
             'title' => 'Ajouter un bien'
@@ -31,7 +31,7 @@ class RoomOwnerController extends Controller
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:owner:rooms' );
+        $view = new View( 'room:owner:rooms', auth_controller: AuthController::class );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',
@@ -51,15 +51,15 @@ class RoomOwnerController extends Controller
         // Handle image upload if provided
         $imagePath = null;
         if ($file && $file['error'] === UPLOAD_ERR_OK) {
-            $uploadDirectory = '../public/image/';
+            $uploadDirectory = '/image/';
     
-            // Ensure the directory exists
-            if (!is_dir($uploadDirectory)) {
-                mkdir($uploadDirectory, 0777, true);  // Create directory with permissions
-            }
+            // // Ensure the directory exists
+            // if (!is_dir($uploadDirectory)) {
+            //     mkdir($uploadDirectory, 777, true);  // Create directory with permissions
+            // }
 
             $fileName = uniqid() . '_' . basename($file['name']);
-            $imagePath = $fileName;
+            $imagePath =  $fileName;
 
             if (!move_uploaded_file($file['tmp_name'], $imagePath)) {
                 echo "Failed to upload image.";
@@ -101,7 +101,7 @@ class RoomOwnerController extends Controller
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:owner:details' );
+        $view = new View( 'room:details', auth_controller: AuthController::class );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     

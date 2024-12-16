@@ -6,20 +6,24 @@
 // Déclaration du namespace de ce fichier
 namespace App;
 
-use App\Controller\HomeController;
-use App\Controller\LoginController;
-use App\Controller\RoomController;
-use App\Controller\RoomOwnerController;
-use App\Controller\RoomUserController;
 
 use Exception;
 use Throwable;
 
 use MiladRahimi\PhpRouter\Router;
 use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
+use MiladRahimi\PhpRouter\Routing\Attributes;
 
-use App\Controller\UserController;
 use Symplefony\View;
+
+
+use App\Controller\RoomController;
+use App\Controller\RoomOwnerController;
+use App\Controller\RoomUserController;
+use App\Controller\AuthController;
+use App\Controller\UserController;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\VisitorMiddleware;
 
 final class App
 {
@@ -62,15 +66,31 @@ final class App
         // {id} doit être un nombre
         $this->router->pattern( 'id', '\d+' );
 
+        // -- Visiteurs (non-connectés) --
+        $visitorAttributes = [
+            Attributes::MIDDLEWARE => [ VisitorMiddleware::class ]
+        ];
+        $this->router->group( $visitorAttributes, function( Router $router ) {
+            // Login
+            $router->get( '/sign-in', [ AuthController::class, 'signIn' ] );
+            $router->post( '/sign-in', [ AuthController::class, 'checkCredentials' ] );
+        });
+        // -- Utilisateurs connectés (tous rôles) --
+        $visitorAttributes = [
+            Attributes::MIDDLEWARE => [ AuthMiddleware::class ]
+        ];
         
-        // Page Home 
+        $this->router->group( $visitorAttributes, function( Router $router ) {
+            // Logout
+            $router->get( '/sign-out', [ AuthController::class, 'signOut' ] );
+        });
 
-        $this->router->get( '/', [ HomeController::class, 'index' ] );
+        
 
         // Page visiteur rooms
 
-        $this->router->post('/rooms', [ RoomController::class, 'create' ]);
-        $this->router->get('/rooms', [ RoomController::class, 'index' ]);
+        $this->router->post('/', [ RoomController::class, 'create' ]);
+        $this->router->get('/', [ RoomController::class, 'index' ]);
 
         // Page user rooms
 
@@ -81,7 +101,8 @@ final class App
         $this->router->get('/rooms-owner/add', [ RoomOwnerController::class, 'add' ]);
         $this->router->post('/rooms-owner', [ RoomOwnerController::class, 'create' ]);
         $this->router->get('/rooms-owner', [ RoomOwnerController::class, 'index' ]);
-
+        $this->router->get('/rooms-owner/{id}', [ RoomOwnerController::class, 'show' ]);
+        
 
         // Page profil
 
@@ -89,11 +110,6 @@ final class App
         $this->router->post('/register', [ UserController::class, 'create' ]);
         $this->router->post('/rooms', [ UserController::class, 'index' ]);
         $this->router->get('/profile/{id}', [ UserController::class, 'show' ]);
-        
-        // page login
-        $this->router->get('/login', [LoginController::class, 'show']);
-        $this->router->post('/login', [LoginController::class, 'login']);
-
         
     }
 

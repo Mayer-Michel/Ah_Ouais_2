@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="/style.css">
 
 <div>
-    <a href="/">RETOUR</a>
-</div>
-<div>
     <a href="/rooms-owner/add">Ajouter un bien</a>
 </div>
 
@@ -29,6 +26,14 @@
                 <?php else: ?>
                     <li><strong>Image:</strong> No image available</li>
                 <?php endif; ?>
+
+                <!-- Reserve Button -->
+                <li>
+                    <form action="/reserve-room" method="POST">
+                        <input type="hidden" name="room_id" value="<?php echo $room->getId(); ?>">
+                        <button type="submit">Réserver</button>
+                    </form>
+                </li>
             </ul>
         </li>
     <?php endforeach; ?>

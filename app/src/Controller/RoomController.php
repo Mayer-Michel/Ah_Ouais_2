@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Model\Entity\Room;
+
 use App\Model\Repository\RepoManager;
-use Laminas\Diactoros\ServerRequest;
 use Symplefony\View;
 
 
@@ -17,7 +16,7 @@ class RoomController extends Controller
     // Page d'accueil 
     public function index(): void
     {
-        $view = new View( 'room:rooms' );
+        $view = new View( 'room:rooms', auth_controller: AuthController::class );
         $rooms = RepoManager::getRM()->getRoomRepo()->getAll();
         $data = [
             'title' => 'Liste des biens',
@@ -32,7 +31,7 @@ class RoomController extends Controller
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:' );
+        $view = new View( 'room:rooms', auth_controller: AuthController::class );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     

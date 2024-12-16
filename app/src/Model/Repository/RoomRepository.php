@@ -60,6 +60,4 @@ class RoomRepository extends Repository
     {
         return $this->readById( Room::class, $id );
     }
-
-
 }
