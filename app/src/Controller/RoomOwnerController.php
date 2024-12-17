@@ -22,7 +22,8 @@ class RoomOwnerController extends Controller
         $view = new View( 'room:owner:create', auth_controller: AuthController::class );
 
         $data = [
-            'title' => 'Ajouter un bien'
+            'title' => 'Ajouter un bien',
+            'equipments' => RepoManager::getRM()->getEquipmentRepo()->getAll()
         ];
 
         $view->render( $data );
@@ -96,6 +97,10 @@ class RoomOwnerController extends Controller
             $this->redirect( '/rooms-owner/add' );
         }
 
+            // Si pas de données post car aucun coché, on crée un tableau vide
+            $equipments =  $room_data[ 'equipments' ] ?? [];
+            $room_created->addEquipments( $equipments );
+
         $this->redirect( '/rooms-owner' );
     }
 
@@ -110,10 +115,14 @@ class RoomOwnerController extends Controller
             View::renderError( 404 );
             return;
         }
+
+        $room_equipments_ids = array_map( function( $equipment ){ return $equipment->getId(); }, $room->getEquipments() );
     
         $data = [
             'title' => 'Room: '. $room->getDescription(),
-            'room' => $room
+            'room' => $room,
+            'equipments' => RepoManager::getRM()->getEquipmentRepo()->getAll(),
+            'room_equipments_ids' => $room_equipments_ids
         ];
     
         $view->render( $data );

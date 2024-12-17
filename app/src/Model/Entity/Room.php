@@ -2,6 +2,7 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Repository\RepoManager;
 use Symplefony\Model\Entity;
 
 class Room extends Entity
@@ -86,6 +87,28 @@ class Room extends Entity
     public function setUser(?Users $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    // Liaisons
+    protected array $equipments;
+    public function getEquipments(): array
+    {
+        if( ! isset( $this->equipments ) ) {
+            $this->equipments = RepoManager::getRM()->getEquipmentRepo()->getAllForRoom( $this->id );
+        }
+        return $this->equipments;
+    }
+    public function addEquipments( array $ids_equipments ): self
+    {
+        $cat_repo = RepoManager::getRM()->getEquipmentRepo();
+        // 1 - On détache toutes les catégories existante sur la voiture
+        $cat_repo->detachAllForRoom( $this->id );
+        if( empty( $ids_equipments ) ) {
+            return $this;
+        }
+        // 2 - On réaffecte seulement les catégories demandées
+        $cat_repo->attachForRoom( $ids_equipments, $this->id );
         return $this;
     }
 }

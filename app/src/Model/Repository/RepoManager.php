@@ -24,7 +24,6 @@ class RepoManager
     private EquipmentRepository $equipment_repository;
     public function getEquipmentRepo(): EquipmentRepository { return $this->equipment_repository; }
     
-    
 
     private function __construct()
     {
