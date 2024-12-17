@@ -31,7 +31,7 @@ class RoomUserController extends Controller
 
     public function show( int $id ): void
     {
-        $view = new View( 'room:details', auth_controller: AuthController::class );
+        $view = new View( 'room:user:details', auth_controller: AuthController::class );
     
         $room = RepoManager::getRM()->getRoomRepo()->getById( $id );
     

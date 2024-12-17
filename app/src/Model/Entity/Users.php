@@ -25,9 +25,9 @@ class Users extends Entity
 
     protected string $password;
     public function getPassword(): string { return $this->password; }
-    public function setPassword( string $password ): self
+    public function setPassword( string $value ): self
     {
-        $this->password = $password;
+        $this->password = $value;
         return $this;
     }
 

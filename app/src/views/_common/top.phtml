@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title><?php echo $title ?></title>
+    <title>Nos Biens</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <header>
-        <div>AhOuais.com</div>
-        <div>
-            <?php if( !$auth::isAuth() ): ?>
-                <a href="/sign-in">Connexion</a>
+    <!-- header.php -->
+    <header class="header">
+        <div class="logo">AhOuais.com</div>
+        <nav class="navbar">
+            <?php if (!$auth::isAuth()): ?>
+                <a href="/sign-in" class="btn btn-primary">Connexion</a>
             <?php else: ?>
-                Bonjour <?php echo $auth::getUser()->getFirstname() ?> ! - <a href="/sign-out">Déconnexion</a>
+                <span class="user-greeting">Bonjour, <?php echo $auth::getUser()->getFirstname(); ?>!</span>
+                <a href="/sign-out" class="btn btn-outline">Déconnexion</a>
             <?php endif ?>
-        </div>
+        </nav>
     </header>
-    <main>

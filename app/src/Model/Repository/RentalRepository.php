@@ -3,7 +3,6 @@
 namespace App\Model\Repository;
 
 use App\Model\Entity\Rentals;
-use App\Model\Entity\Users;
 use Symplefony\Model\Repository;
 
 class RentalRepository extends Repository
@@ -30,8 +29,8 @@ class RentalRepository extends Repository
         $success = $sth->execute([
             'user_id' => $rental->getUser_id(),
             'room_id' => $rental->getRoom_id(),
-            'date_start' => $rental->getDate_start(),
-            'date_end' => $rental->getDate_end()
+            'date_start' => $rental->getDate_startStr(),
+            'date_end' => $rental->getDate_endStr()
         ]);
 
         // Si echec de l'insertion

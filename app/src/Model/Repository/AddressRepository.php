@@ -55,6 +55,4 @@ class AddressRepository extends Repository
     {
         return $this->readById( Address::class, $id );
     }
-
-
 }

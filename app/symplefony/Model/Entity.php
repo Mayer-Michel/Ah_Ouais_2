@@ -1,5 +1,9 @@
 <?php
 namespace Symplefony\Model;
+
+use DateTime;
+use ReflectionProperty;
+
 abstract class Entity 
 {
     protected int $id;
@@ -19,6 +23,13 @@ abstract class Entity
             // Si le nom de la colonne ne correspond à aucune propriété
             if( !property_exists( $this, $column_name ) ) {
                 continue;
+            }
+            // Traitement particulier pour les dates (car conversion automatique impossible)
+            // ReflectionProperty permet d'obtenir des infos techniques sur une propriété de classe
+            $reflexionProp = new ReflectionProperty( $this, $column_name );
+            // Si le type de la propriété est "\DateTime", on convertit la chaîne en DateTime
+            if( $reflexionProp->getType()->getName() == DateTime::class ) {
+                $value = new DateTime( $value );
             }
             $this->$column_name = $value;
         }

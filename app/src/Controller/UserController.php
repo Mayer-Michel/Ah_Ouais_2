@@ -11,6 +11,7 @@ use Symplefony\View;
 
 use Symplefony\Controller;
 
+
 class UserController extends Controller
 {
 
@@ -39,7 +40,7 @@ class UserController extends Controller
             $this->redirect( '/register' );
         }
 
-        $this->redirect( '/rooms' );
+        $this->redirect( '/sign-in' );
     }
 
     // Page d'accueil 

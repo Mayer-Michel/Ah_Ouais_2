@@ -86,8 +86,8 @@ class AuthController extends Controller
             // TODO: gérer une erreur
             $this->redirect( '/sign-in' );
         }
+
         // On vérifie les identifiants de connexion
-        // TODO: Gérer le chiffrement du mot de passe
         $user = RepoManager::getRM()->getUserRepo()->checkAuth( $email, $password );
         // Si échec
         if( is_null( $user ) ) {
@@ -103,6 +103,7 @@ class AuthController extends Controller
         };
         $this->redirect( $redirect_url );
     }
+
     // -- Utilisateurs connectés (tous rôles) --    
     /**
      * Déconnexion de la session

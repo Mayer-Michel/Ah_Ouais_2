@@ -25,9 +25,8 @@
 
                 <!-- Reserve Button -->
                 <li>
-                    <form action="/reserve-room" method="POST">
-                        <input type="hidden" name="room_id" value="<?php echo $room->getId(); ?>">
-                        <button type="submit">Réserver</button>
+                    <form action="/room/<?php echo $room->getId(); ?>" method="GET">
+                    <button type="submit">Réserver</button>
                     </form>
                 </li>
             </ul>

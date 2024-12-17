@@ -21,6 +21,7 @@ use App\Controller\RoomController;
 use App\Controller\RoomOwnerController;
 use App\Controller\RoomUserController;
 use App\Controller\AuthController;
+use App\Controller\RentalController;
 use App\Controller\UserController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\VisitorMiddleware;
@@ -43,6 +44,7 @@ final class App
 
         return self::$app_instance;
     }
+    
 
     // Démarrage de l'application
     public function start(): void
@@ -79,7 +81,7 @@ final class App
         $visitorAttributes = [
             Attributes::MIDDLEWARE => [ AuthMiddleware::class ]
         ];
-        
+
         $this->router->group( $visitorAttributes, function( Router $router ) {
             // Logout
             $router->get( '/sign-out', [ AuthController::class, 'signOut' ] );
@@ -95,21 +97,25 @@ final class App
         // Page user rooms
 
         $this->router->get('/rooms-user', [ RoomUserController::class, 'index' ]);
+        $this->router->get('/room-user/{id}', [ RoomUserController::class, 'show' ]);
 
         // Page owner rooms
 
         $this->router->get('/rooms-owner/add', [ RoomOwnerController::class, 'add' ]);
         $this->router->post('/rooms-owner', [ RoomOwnerController::class, 'create' ]);
         $this->router->get('/rooms-owner', [ RoomOwnerController::class, 'index' ]);
-        $this->router->get('/rooms-owner/{id}', [ RoomOwnerController::class, 'show' ]);
+        $this->router->get('/room-owner/{id}', [ RoomOwnerController::class, 'show' ]);
         
 
         // Page profil
 
         $this->router->get('/register', [ UserController::class, 'add' ]);
         $this->router->post('/register', [ UserController::class, 'create' ]);
-        $this->router->post('/rooms', [ UserController::class, 'index' ]);
         $this->router->get('/profile/{id}', [ UserController::class, 'show' ]);
+
+        // Resérvé
+        $this->router->post('/rooms-res/add/{id}', [ RentalController::class, 'create' ]);
+        $this->router->get('/rooms-res', [ RentalController::class, 'meslocation' ]);
         
     }
 

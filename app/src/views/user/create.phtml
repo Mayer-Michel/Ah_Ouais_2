@@ -3,26 +3,26 @@
 </div>
 
 <h1>Creation de compte</h1>
-<form action="/register" method="post" novalidate>
+<form action="/register" method="post">
     <div>
         <label for="input-email">Email :</label>
-        <input type="email" name="email" id="input-email">
+        <input type="email" name="email" id="input-email" required>
     </div>
     <div>
         <label for="input-password">Mot de passe :</label>
-        <input type="password" name="password" id="input-password">
+        <input type="password" name="password" id="input-password" required>
     </div>
     <div>
         <label for="input-firstname">Prénom :</label>
-        <input type="text" name="firstname" id="input-firstname">
+        <input type="text" name="firstname" id="input-firstname" required>
     </div>
     <div>
         <label for="input-lastname">Nom :</label>
-        <input type="text" name="lastname" id="input-lastname">
+        <input type="text" name="lastname" id="input-lastname" required>
     </div>
     <div>
         <label for="input-phone_number">Téléphone :</label>
-        <input type="tel" name="phone_number" id="input-phone_numbre">
+        <input type="tel" name="phone_number" id="input-phone_numbre" required>
     </div>
     <div>
         <label for="select-role">Rôle : </label>

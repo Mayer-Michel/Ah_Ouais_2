@@ -9,7 +9,7 @@ class Rentals extends Entity
 {
     protected DateTime $date_start;
     public function getDate_start(): DateTime { return $this->date_start; }
-    public function setDate_start( DateTime $date_start ): self
+    public function setDate_start( string|DateTime $date_start ): self
     {
         $this->date_start = $date_start;
         return $this;
@@ -38,4 +38,19 @@ class Rentals extends Entity
         $this->room_id = $room_id;
         return $this;
     }  
+
+    public function getDate_startStr() : string
+    {
+        return self::dateToStr($this->date_start);
+    }
+
+    public function getDate_endStr() : string
+    {
+        return self::dateToStr($this->date_end);
+    }
+
+    private static function dateToStr(DateTime $date) : string
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

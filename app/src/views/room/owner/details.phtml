@@ -1,0 +1,38 @@
+<div class="container">
+    <a href="#" class="back-btn">🔙 Retour</a>
+
+    <h1 class="room-title"><?php echo htmlspecialchars($room->getDescription()); ?></h1>
+
+    <div class="room-details">
+        <div class="room-info">
+            <p><strong>ID:</strong> <?php echo $room->getId(); ?></p>
+            <p><strong>Capacité:</strong> <?php echo $room->getCapacity(); ?> personnes</p>
+            <p><strong>Surface:</strong> <?php echo $room->getSurface(); ?> m²</p>
+            <p><strong>Prix par jour:</strong> €<?php echo $room->getPrice_day(); ?></p>
+            <p><strong>Description:</strong> <?php echo htmlspecialchars($room->getDescription()); ?></p>
+        </div>
+
+        <div class="room-image-container">
+            <?php if ($room->getImage()): ?>
+                <img src="<?php echo '/' . $room->getImage(); ?>" alt="Image de la chambre" class="room-image">
+            <?php else: ?>
+                <p><strong>Image:</strong> Aucune image disponible</p>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <form action="/rooms-res/add/<?php echo $room->getId(); ?>" method="POST" class="reservation-form">
+        <h2>Réserver cette chambre</h2>
+        
+        <label for="date_start">Date de début:</label>
+        <input type="date" id="date_start" name="date_start" required>
+
+        <label for="date_end">Date de fin:</label>
+        <input type="date" id="date_end" name="date_end" required>
+
+        <button type="submit" class="reserve-btn">Réserver</button>
+    </form>
+</div>
+
+</body>
+</html>
