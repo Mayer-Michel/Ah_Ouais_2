@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Model\Entity\Rentals;
 use App\Model\Repository\RepoManager;
 use App\Session;
-use DateTime;
 use Laminas\Diactoros\ServerRequest;
 
 
@@ -51,14 +50,11 @@ class RentalController extends Controller
     // Afficher toutes les locations 
     public function meslocation(): void
     {
-        // Récupérer les locations depuis le repository
-        $locations = RepoManager::getRM()->getRentalRepo()->getAll();
-
         // Passer les locations à la vue
         $view = new View('myRental:my_rental', auth_controller: AuthController::class);
         $data = [
             'title' => 'Liste des locations',
-            'locations' => $locations
+            'rentals' => RepoManager::getRM()->getRentalRepo()->getAllForReservation(Session::get(Session::USER) -> getId())
         ];
 
         // Rendre la vue avec les données

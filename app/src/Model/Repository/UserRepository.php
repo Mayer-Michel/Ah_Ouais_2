@@ -28,8 +28,8 @@ class UserRepository extends Repository
         }
 
         $success = $sth->execute([
+            'password' => $user->getPassword(),
             'email' => $user->getEmail(),
-            'password' =>  password_hash($user->getPassword(), PASSWORD_BCRYPT),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
             'phone_number' => $user->getPhone_number(),
@@ -53,51 +53,12 @@ class UserRepository extends Repository
         return $this->readAll( Users::class );
     }
 
+
     /* cRud: Read un item par son id */
     public function getById( int $id ): ?Users
     {
         return $this->readById( Users::class, $id );
     }
-
-    /* crUd: Update */
-    public function update( Users $user ): ?Users
-    {
-        $query = sprintf(
-            'UPDATE `%s` 
-                SET
-                    `email`=:email,
-                    `firstname`=:firstname,
-                    `lastname`=:lastname,
-                    `phone_number`=:phone_number,
-                    `role` =:role
-                WHERE id=:id',
-            $this->getTableName()
-        );
-
-        $sth = $this->pdo->prepare( $query );
-
-        // Si la préparation échoue
-        if( ! $sth ) {
-            return null;
-        }
-
-        $success = $sth->execute([
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'lastname' => $user->getLastname(),
-            'phone_number' => $user->getPhone_number(),
-            'role' => $user->getRole(),
-            'id' => $user->getId()
-        ]);
-
-        // Si echec de la mise à jour
-        if( ! $success ) {
-            return null;
-        }
-
-        return $user;
-    }
-
     
     /**
      * Valide les données d'authentification

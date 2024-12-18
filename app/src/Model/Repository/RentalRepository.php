@@ -3,6 +3,7 @@
 namespace App\Model\Repository;
 
 use App\Model\Entity\Rentals;
+use App\Model\Entity\Room;
 use Symplefony\Model\Repository;
 
 class RentalRepository extends Repository
@@ -48,6 +49,32 @@ class RentalRepository extends Repository
     public function getAll(): array
     {
         return $this->readAll( Rentals::class );
+    }
+
+    public function getAllForReservation( int $id ): array
+    {
+        $query = sprintf(
+            'SELECT * FROM `%s` Where user_id = :id' ,
+            $this->getTableName()
+        );
+
+        $sth = $this->pdo->prepare( $query );
+        // Si la préparation échoue
+        if( ! $sth ) {
+            return [];
+        }
+        $success = $sth->execute([ 'id' => $id] );
+        // Si echec
+        if( ! $success ) {
+            return [];
+        }
+        // Récupération des résultats
+        $rentals = [];
+        while( $rental_data = $sth->fetch() ) {
+            $rental = new Room( $rental_data );
+            $rentals[] = $rental;
+        }
+        return $rentals;
     }
 
     /* cRud: Read un item par son id */

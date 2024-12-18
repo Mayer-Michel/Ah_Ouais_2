@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\App;
 use Laminas\Diactoros\ServerRequest;
 use Symplefony\Controller;
 use Symplefony\View;
@@ -86,6 +87,8 @@ class AuthController extends Controller
             // TODO: gérer une erreur
             $this->redirect( '/sign-in' );
         }
+         // Chiffrement du mot de passe
+         $password = App::strHash( $password );
 
         // On vérifie les identifiants de connexion
         $user = RepoManager::getRM()->getUserRepo()->checkAuth( $email, $password );

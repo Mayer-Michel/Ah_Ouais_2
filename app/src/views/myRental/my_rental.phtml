@@ -1,34 +1,30 @@
 <h1>Locations</h1>
 
-<h1>Détails du logement</h1>
 
+<h1>Détails du rental</h1>
 
-<div class="logement-details">
-    <img src="/image/<?php echo htmlspecialchars($logement->getImage()); ?>" alt="Image du logement">
-    <div class="info-content">
-        <h3><?php echo htmlspecialchars($logement->getAdresseId()); ?></h3>
-        <p><?php echo htmlspecialchars($logement->getDescription()); ?></p>
-        <p class="price"><?php echo htmlspecialchars($logement->getPrix()); ?> €</p>
-        <!-- Ajouter les informations supplémentaires -->
-        <p>Surface : <?php echo htmlspecialchars($logement->getSurface()); ?> m²</p>
-        <p>Nombre de pièces : <?php echo htmlspecialchars($logement->getNbRooms()); ?></p>
+<?php if (!empty($rentals)): ?>
+        <?php foreach ($rentals as $rental): ?>
+                <div class="room-card">
+                    <h2><?php echo $rental->getDescription(); ?></h2>
+                    <ul class="room-info">
+                        <li><strong>ID:</strong> <?php echo $rental->getId(); ?></li>
+                        <li><strong>Capacité:</strong> <?php echo $rental->getCapacity(); ?> personnes</li>
+                        <li><strong>Surface:</strong> <?php echo $rental->getSurface(); ?>m²</li>
+                        <li><strong>Prix par jour:</strong> <?php echo $rental->getPrice_day(); ?>€</li>
+                    </ul>
 
-
-    </div>
-</div>
-
-<h2>Réservez ce logement</h2>
-
-<!-- Formulaire de réservation -->
-<form action="/rentals/<?php echo htmlspecialchars($logement->getId()); ?>" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="date_arrivee">Date d'arrivée :</label>
-        <input type="date" id="date_arrivee" name="rental_date" required>
-    </div>
-    <div class="form-group">
-        <label for="date_depart">Date de départ :</label>
-        <input type="date" id="date_depart" name="end_date" required>
-    </div>
-    
-    <button type="submit">Réserver</button>
-</form>
+                    <?php if ($rental->getImage()): ?>
+                        <div class="room-image">
+                            <img src="<?php echo '/' . $rental->getImage(); ?>" alt="Room Image">
+                        </div>
+                    <?php else: ?>
+                        <p class="no-image">Pas d'image disponible</p>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>Vous n'avez pas encore réserver de logement.</p>
+<?php endif; ?>

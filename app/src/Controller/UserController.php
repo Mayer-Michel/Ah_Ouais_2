@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\App;
 use App\Model\Entity\Users;
 use App\Model\Repository\RepoManager;
 use Laminas\Diactoros\ServerRequest;
@@ -32,6 +32,10 @@ class UserController extends Controller
     {
         $user_data = $request->getParsedBody();
         $user = new Users( $user_data );
+        // Si le mot de passe existe, on le chiffre
+        if( !is_null( $user->getPassword() ) ) {
+            $user->setPassword( App::strHash( $user->getPassword() ) );
+        }
 
         $user_created = RepoManager::getRM()->getUserRepo()->create( $user );
 

@@ -1,5 +1,5 @@
 <div class="container">
-    <a href="#" class="back-btn">🔙 Retour</a>
+    <a href="/rooms-owner" class="back-btn">🔙 Retour</a>
 
     <h1 class="room-title"><?php echo htmlspecialchars($room->getDescription()); ?></h1>
 
@@ -19,17 +19,7 @@
                 <p><strong>Image:</strong> Aucune image disponible</p>
             <?php endif; ?>
         </div>
-        <fieldset>
-            <legend>Equipments</legend>
-            <?php
-            foreach( $equipments as $equipment ) {
-                echo '<div>';
-                    printf( '<label for="chk-equipment-%s">%s</label>', $equipment->getId(), $equipment->getType_equipments() );
-                echo '</div>';
-            }
-            ?>
-        </fieldset>
-    </div>
+
 
     <form action="/rooms-res/add/<?php echo $room->getId(); ?>" method="POST" class="reservation-form">
         <h2>Réserver cette chambre</h2>

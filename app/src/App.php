@@ -25,6 +25,7 @@ use App\Controller\RentalController;
 use App\Controller\UserController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\VisitorMiddleware;
+use Symplefony\Security;
 
 final class App
 {
@@ -45,6 +46,17 @@ final class App
         return self::$app_instance;
     }
     
+      /**
+     * Hache une chaîne de caractères en servant du "sel" et du "poivre" définis dans .env
+     *
+     * @param  string $str Chaîne à hacher
+     * 
+     * @return string Résultat
+     */
+    public static function strHash( string $str ): string
+    {
+        return Security::strButcher( $str, $_ENV['security_salt'], $_ENV['security_pepper']);
+    }
 
     // Démarrage de l'application
     public function start(): void
@@ -52,7 +64,6 @@ final class App
         session_start();
         $this->registerRoutes();
         $this->startRouter();
-        var_dump(Session::get(Session::USER));
     }
 
     private function __construct()

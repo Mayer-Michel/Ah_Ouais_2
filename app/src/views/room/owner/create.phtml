@@ -130,34 +130,24 @@
  
 <h1>Liste de vos logements</h1>
  
-<?php if (!empty($logements)): ?>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Adresse</th>
-                <th>Prix</th>
-                <th>Date d'ajout</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($logements as $logement): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($logement['id']); ?></td>
-                    <td><?php echo htmlspecialchars($logement['type_id']); ?></td>
-                    <td><?php echo htmlspecialchars($logement['adresse_id']); ?></td>
-                    <td><?php echo htmlspecialchars($logement['price']); ?></td>
-                    <td><?php echo htmlspecialchars($logement['date_added']); ?></td>
-                    <td>
-                        <!-- Afficher l'image si elle existe -->
-                        <?php if (!empty($logement['image'])): ?>
-                            <img src="/image/<?php echo htmlspecialchars($logement['image']); ?>" alt="Image du bien" width="100">
-                        <?php else: ?>
-                            Pas d'image
-                        <?php endif; ?>
-                    </td>
+<?php if (!empty($rooms)): ?>
+        <?php foreach ($rooms as $room): ?>
+                <div class="room-card">
+                    <h2><?php echo $room->getDescription(); ?></h2>
+                    <ul class="room-info">
+                        <li><strong>ID:</strong> <?php echo $room->getId(); ?></li>
+                        <li><strong>Capacité:</strong> <?php echo $room->getCapacity(); ?> personnes</li>
+                        <li><strong>Surface:</strong> <?php echo $room->getSurface(); ?>m²</li>
+                        <li><strong>Prix par jour:</strong> <?php echo $room->getPrice_day(); ?>€</li>
+                    </ul>
+
+                    <?php if ($room->getImage()): ?>
+                        <div class="room-image">
+                            <img src="<?php echo '/' . $room->getImage(); ?>" alt="Room Image">
+                        </div>
+                    <?php else: ?>
+                        <p class="no-image">Pas d'image disponible</p>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>

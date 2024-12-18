@@ -23,7 +23,8 @@ class RoomOwnerController extends Controller
 
         $data = [
             'title' => 'Ajouter un bien',
-            'equipments' => RepoManager::getRM()->getEquipmentRepo()->getAll()
+            'equipments' => RepoManager::getRM()->getEquipmentRepo()->getAll(),
+            'rooms' => RepoManager::getRM()->getRoomRepo()->getAllForOwner(Session::get(Session::USER) -> getId())
         ];
 
         $view->render( $data );

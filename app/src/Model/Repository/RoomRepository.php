@@ -55,6 +55,34 @@ class RoomRepository extends Repository
         return $this->readAll( Room::class );
     }
 
+    public function getAllForOwner( int $id ): array
+    {
+        $query = sprintf(
+            'SELECT * FROM `%s` Where user_id = :id' ,
+            $this->getTableName()
+        );
+
+        $sth = $this->pdo->prepare( $query );
+        // Si la préparation échoue
+        if( ! $sth ) {
+            return [];
+        }
+        $success = $sth->execute([ 'id' => $id] );
+        // Si echec
+        if( ! $success ) {
+            return [];
+        }
+        // Récupération des résultats
+        $rooms = [];
+        while( $room_data = $sth->fetch() ) {
+            $room = new Room( $room_data );
+            $rooms[] = $room;
+        }
+        return $rooms;
+    }
+
+
+
     /* cRud: Read un item par son id */
     public function getById( int $id ): ?Room
     {
